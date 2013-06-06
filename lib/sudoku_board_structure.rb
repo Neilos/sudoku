@@ -10,9 +10,7 @@ class SudokuBoardStructure
     validate_board_structure
     last_position = board_width * board_height - 1
 
-    @positions_aligned_with = (0..last_position).map do |i|
-        work_out_other_positions_aligned_with(i)
-    end
+    @positions_aligned_with = (0..last_position).map { |i| work_out_other_positions_aligned_with(i) }
 
     @rows = work_out_rows
     @columns = work_out_columns
@@ -56,7 +54,6 @@ private
     end
     boxes
   end
-
 
   def work_out_other_positions_aligned_with(position)
     result = (work_out_other_positions_in_same_row(position) + work_out_other_positions_in_same_column(position) + work_out_other_positions_in_same_box(position)  - [position]).uniq

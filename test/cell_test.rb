@@ -62,18 +62,4 @@ describe Cell do
     end
   end
 
-  describe "equality" do
-    it "should know when two cells are equal" do
-      @non_finalized_cell.must_equal Cell.new("0",1)
-      @finalized_cell.must_equal Cell.new("2",0)
-    end
-
-    it "should know when two cells are not equal" do
-      @non_finalized_cell.wont_equal Cell.new("2",0)
-      @finalized_cell.wont_equal Cell.new("0",1)
-    end
-  end
-
-
-
 end

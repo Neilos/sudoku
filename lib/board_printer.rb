@@ -1,12 +1,6 @@
 class BoardPrinter
 
 def print(board)
-  puts grid(board)
-end
-
-private
-
-def grid(board)
   result = ""
   board.cells.each_with_index do |cell, index|
      result << "|\n\n" if (index % 9 == 0) && index != 0
@@ -15,6 +9,7 @@ def grid(board)
      result << " " + cell.to_s + " "
   end
   result << "|\n+---------+---------+---------+\n\n"
+  puts result
 end
 
 end

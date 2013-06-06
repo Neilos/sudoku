@@ -27,7 +27,7 @@ describe Board do
 
   it "should deduce_cell_possiblities for all cells" do
     partial_solution_string = "940173258823056791175298364398517642010862935562934817239741586684325179751689423"
-    @board.deduce_all_cell_values
+    @board.deduce_all_cell_values!
     @board.to_s.must_equal partial_solution_string
   end
 
@@ -39,7 +39,7 @@ describe Board do
   it "should NOT be 'solvable' if the cells don't have at least one possible value" do
     unsolved_puzzle_string = "096173258823456791175298364398517642417862935562934817239741586684325179751689423"
     unsolved_board = Board.new(unsolved_puzzle_string, @board_structure)
-    unsolved_board.deduce_all_cell_values
+    unsolved_board.deduce_all_cell_values!
     unsolved_board.solvable?.wont_equal true
   end
 

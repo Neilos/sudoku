@@ -10,12 +10,8 @@ def initialize(puzzle_string, board_structure)
   initialize_cells(puzzle_string)
 end
 
-def to_s
-  @cells.join
-end
-
-def create_copy
-  Board.new(self.to_s, @board_structure)
+def deduce_all_cell_values!
+  @cells.each_index {|position| deduce_cell_possiblities(position)}
 end
 
 def valid?
@@ -32,10 +28,13 @@ def solvable?
   @cells.all? {|cell| cell.possibilities.length > 0}
 end
 
-def deduce_all_cell_values
-  @cells.each_index {|position| deduce_cell_possiblities(position)}
+def to_s
+  @cells.join
 end
 
+def create_copy
+  Board.new(self.to_s, @board_structure)
+end
 
 #########################
 private
