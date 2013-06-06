@@ -1,4 +1,4 @@
-# assumes a list of numbered positions (indexes) in a grid and interprets this list as a grid, returning appropriate data Structures
+# assumes returns appropriate data Structures for a board with given dimensions
 class SudokuBoardStructure
   attr_reader :board_width, :board_height, :box_width, :box_height, :rows, :columns, :boxes
 
