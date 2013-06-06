@@ -1,6 +1,6 @@
 # assumes a list of numbered positions (indexes) in a grid and interprets this list as a grid, returning appropriate data Structures
 class SudokuBoardStructure
-  attr_reader :board_width, :board_height, :box_width, :box_height
+  attr_reader :board_width, :board_height, :box_width, :box_height, :rows, :columns, :boxes
 
   def initialize(dimensions={})
     @board_width = dimensions[:board_width] || 9
@@ -13,6 +13,10 @@ class SudokuBoardStructure
     @positions_aligned_with = (0..last_position).map do |i|
         work_out_other_positions_aligned_with(i)
     end
+
+    @rows = work_out_rows
+    @columns = work_out_columns
+    @boxes = work_out_boxes
   end
 
   def positions_aligned_with(position)
@@ -26,8 +30,36 @@ private
     raise(RuntimeError, "invalid board dimensions") if (board_width % box_width != 0) || (board_height % box_height != 0)
   end
 
+
+  def work_out_rows
+    @rows = (0..board_height-1).map do |j|
+      (0..board_width-1).map{|i| j * board_width + i}
+    end
+  end
+
+  def work_out_columns
+    @columns = (0..board_height-1).map do |j|
+      (0..board_width-1).map{|i| j + board_width * i}
+    end
+  end
+
+  def work_out_boxes
+    boxes = []
+    (0..(board_width / box_width)-1).each do |a|
+      (0..(board_height / box_height)-1).each do |b|
+        boxes << (0..box_height-1).map do |j|
+          (0..box_width-1).map  do |i|
+             (i + j * board_width + b * box_width + a * board_width * box_height)
+          end
+        end.flatten
+      end
+    end
+    boxes
+  end
+
+
   def work_out_other_positions_aligned_with(position)
-    result = (work_out_other_positions_in_same_row(position) + work_out_other_positions_in_same_column(position) + work_out_other_positions_in_same_box(position)).uniq
+    result = (work_out_other_positions_in_same_row(position) + work_out_other_positions_in_same_column(position) + work_out_other_positions_in_same_box(position)  - [position]).uniq
   end
 
   def work_out_other_positions_in_same_row(position)
